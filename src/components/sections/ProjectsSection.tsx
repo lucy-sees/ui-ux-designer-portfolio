@@ -1,32 +1,62 @@
-import React from 'react';
-import { TweenMax, Power2, TimelineLite } from 'gsap';
+"use client";
 
-const ProjectsSection = () => {
-  const projects = [
-    // Example projects, replace with your data
-    { id: 1, title: 'Project One', description: 'Description for project one' },
-    { id: 2, title: 'Project Two', description: 'Description for project two' },
-    { id: 3, title: 'Project Three', description: 'Description for project three' },
-  ];
+import Link from "next/link";
+import { useEffect } from "react";
+import ProjectCard from "@/components/ui/ProjectCard";
+import { PROJECTS } from "@/lib/data";
 
-  const animateProjects = (element) => {
-    const tl = new TimelineLite();
-    tl.staggerFrom(element, 1, { opacity: 0, y: 50, ease: Power2.easeOut }, 0.2);
-  };
+export default function ProjectsSection() {
+  useEffect(() => {
+    const init = async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.from("#projects-header", {
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: { trigger: "#projects", start: "top 80%" },
+      });
+
+      gsap.from(".gsap-project-card", {
+        opacity: 0,
+        y: 60,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: { trigger: "#projects-grid", start: "top 75%" },
+      });
+    };
+
+    init();
+  }, []);
 
   return (
-    <section className="projects-section">
-      <h2>My Projects</h2>
-      <div className="grid-container" ref={(el) => animateProjects(el && el.children)}>  
-        {projects.map(project => (
-          <div key={project.id} className="grid-item">
-            <h3>{project.title}</h3>
-            <p>{project.description}</p>
-          </div>
-        ))}
+    <section className="py-32 bg-surface-container-lowest px-8" id="projects">
+      <div className="max-w-7xl mx-auto">
+        <div id="projects-header" className="mb-20 flex justify-between items-end">
+          <h2 className="font-headline font-black text-6xl tracking-tighter">
+            SELECTED WORKS
+          </h2>
+          <Link
+            href="#"
+            className="font-label font-bold uppercase tracking-widest text-primary hover:text-primary-fixed transition-colors"
+          >
+            View All Case Studies →
+          </Link>
+        </div>
+
+        <div
+          id="projects-grid"
+          className="grid grid-cols-1 md:grid-cols-12 gap-6"
+        >
+          {PROJECTS.map((project, i) => (
+            <ProjectCard key={i} {...project} />
+          ))}
+        </div>
       </div>
     </section>
   );
-};
-
-export default ProjectsSection;
+}

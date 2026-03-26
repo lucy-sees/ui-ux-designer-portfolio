@@ -1,45 +1,48 @@
-import React from 'react';
-import { gsap } from 'gsap';
+"use client";
 
-const StatsSection = () => {
-    React.useEffect(() => {
-        const counters = document.querySelectorAll('.counter');
-        counters.forEach(counter => {
-            const updateCount = () => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                const speed = 200;
-                const increment = Math.trunc(target / speed);
+import { useEffect } from "react";
+import { STATS } from "@/lib/data";
 
-                if (count < target) {
-                    counter.innerText = count + increment;
-                    gsap.to(counter, { opacity: 1, duration: 0.5 });
-                    setTimeout(updateCount, 1);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            updateCount();
-            gsap.from(counter, { opacity: 0, duration: 0.5 });
-        });
-    }, []);
+export default function StatsSection() {
+  useEffect(() => {
+    const init = async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
 
-    return (
-        <section className="stats-section">
-            <div className="stat">
-                <h2 className="counter" data-target="1500">0</h2>
-                <p>Followers</p>
-            </div>
-            <div className="stat">
-                <h2 className="counter" data-target="250">0</h2>
-                <p>Projects</p>
-            </div>
-            <div className="stat">
-                <h2 className="counter" data-target="100">0</h2>
-                <p>Clients</p>
-            </div>
-        </section>
-    );
-};
+      gsap.from(".gsap-stat", {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#stats-section",
+          start: "top 75%",
+        },
+      });
+    };
 
-export default StatsSection;
+    init();
+  }, []);
+
+  return (
+    <section
+      id="stats-section"
+      className="py-24 bg-inverse-surface text-surface px-8"
+    >
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
+        {STATS.map((stat) => (
+          <div key={stat.label} className="gsap-stat text-center md:text-left">
+            <span className="font-headline font-black text-6xl md:text-8xl block text-primary-fixed mb-2">
+              {stat.value}
+            </span>
+            <span className="font-label text-sm uppercase tracking-[0.3em] text-surface-variant">
+              {stat.label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
