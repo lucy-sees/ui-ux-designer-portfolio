@@ -1,30 +1,39 @@
-import { useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+"use client";
 
-gsap.registerPlugin(ScrollTrigger);
+import { useEffect, useRef } from "react";
+import type { RefObject } from "react";
 
-const useGSAPAnimation = (ref, animation) => {
-    useEffect(() => {
-        const element = ref.current;
-        if (!element) return;
+type GSAPCallback = (
+  gsap: typeof import("gsap").gsap,
+  ScrollTrigger: typeof import("gsap/ScrollTrigger").ScrollTrigger
+) => gsap.core.Timeline | void;
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: element,
-                start: 'top bottom',
-                end: 'top top',
-                scrub: true,
-            }
-        });
+export function useGSAPAnimation(
+  callback: GSAPCallback,
+  deps: unknown[] = []
+): RefObject<HTMLElement | null> {
+  const ref = useRef<HTMLElement | null>(null);
 
-        // Add animation actions here
-        animation(tl);
+  useEffect(() => {
+    let ctx: import("gsap").Context | null = null;
 
-        return () => {
-            tl.kill();
-        };
-    }, [ref, animation]);
-};
+    const init = async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
 
-export default useGSAPAnimation;
+      ctx = gsap.context(() => {
+        callback(gsap, ScrollTrigger);
+      }, ref.current ?? undefined);
+    };
+
+    init();
+
+    return () => {
+      ctx?.revert();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+
+  return ref as RefObject<HTMLElement | null>;
+}
