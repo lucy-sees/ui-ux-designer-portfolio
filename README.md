@@ -1,36 +1,54 @@
-# Ameli Portfolio
+# Ameli Nimbus Portfolio — Next.js
 
-This is a Next.js portfolio project created by lucy-sees to showcase personal projects and skills.
+A modular, production-ready portfolio site built with **Next.js 14**, **Tailwind CSS**, and **GSAP** animations.
 
-## Features
-- Server-side rendering for optimized performance
-- Static site generation for faster loading times
-- Responsive design for a better user experience on all devices
-- Easy navigation through various sections
+## Stack
 
-## Installation
-To get started with this project, clone the repository and install the necessary dependencies:
+- **Next.js 14** (App Router, TypeScript)
+- **Tailwind CSS** — custom design token system (amber/gold palette)
+- **GSAP + ScrollTrigger** — scroll-driven and entrance animations
+- **Google Fonts** — Space Grotesk + Manrope
+- **Material Symbols** — icon font
+
+## Getting Started
 
 ```bash
-git clone https://github.com/lucy-sees/ameli-portfolio.git
-cd ameli-portfolio
 npm install
-```
-
-## Usage
-To start the development server:
-
-```bash
 npm run dev
 ```
 
-Your portfolio will be available at `http://localhost:3000`.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Deployment
-For deployment, you can use platforms like Vercel, Netlify, or any other hosting service that supports Next.js applications.
+## Project Structure
 
-## Author
-- **Lucy Sees** - [lucy-sees](https://github.com/lucy-sees) 
+```
+src/
+├── app/
+│   ├── layout.tsx        # Root layout (fonts, metadata)
+│   ├── page.tsx          # Page composition
+│   └── globals.css       # Tailwind + base styles
+├── components/
+│   ├── layout/
+│   │   ├── Navbar.tsx    # Sticky nav + mobile menu
+│   │   └── Footer.tsx
+│   ├── sections/
+│   │   ├── HeroSection.tsx
+│   │   ├── ServicesSection.tsx
+│   │   ├── AboutSection.tsx
+│   │   ├── StatsSection.tsx
+│   │   ├── SkillsSection.tsx
+│   │   ├── ProjectsSection.tsx
+│   │   └── ContactSection.tsx
+│   └── ui/
+│       ├── ServiceCard.tsx
+│       ├── SkillBar.tsx
+│       └── ProjectCard.tsx
+├── hooks/
+│   └── useGSAPAnimation.ts
+└── lib/
+    └── data.ts           # All site content / constants
+```
 
-## License
-This project is licensed under the MIT License.
+## Customisation
+
+All content (nav links, services, stats, skills, projects, contact info) lives in `src/lib/data.ts`. Edit that file to update the site without touching components.
