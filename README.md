@@ -3,7 +3,10 @@
 A 2026-level **AI-orchestrated portfolio** built with **Next.js 14**, **Tailwind CSS**, **GSAP Flip**, **React Three Fiber**, and the **Google Gemini API**.
 
 ---
+## Demo
 
+- Live site: https://ui-ux-designer-portfolio-01.netlify.app/
+---
 ## Stack
 
 | Layer | Technology |
