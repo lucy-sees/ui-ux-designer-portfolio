@@ -85,7 +85,7 @@ export const PROJECTS = [
 ];
 
 export const CONTACT_INFO = [
-  { icon: "mail",        label: "Email",    value: "hello@amelinimbus.com"  },
+  { icon: "mail",        label: "Email",    value: "hello@lucysees.com"  },
   { icon: "phone",       label: "Phone",    value: "+254 700 000 000"       },
   { icon: "location_on", label: "Location", value: "Nairobi, Kenya"         },
 ];

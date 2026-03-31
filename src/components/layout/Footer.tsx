@@ -8,7 +8,7 @@ export default function Footer() {
           DESIGNER.UX
         </Link>
         <p className="font-mono text-xs text-surface/20 text-center tracking-widest">
-          © {new Date().getFullYear()} AMELI NIMBUS — ALL RIGHTS RESERVED
+          © {new Date().getFullYear()} LUCY SEES — ALL RIGHTS RESERVED
         </p>
         <div className="flex gap-8">
           {["Twitter", "Instagram", "LinkedIn"].map((s) => (

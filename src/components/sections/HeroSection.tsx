@@ -14,8 +14,8 @@ function BlobFallback() {
   );
 }
 
-const CHARS_AMELI  = "AMELI".split("");
-const CHARS_NIMBUS = "NIMBUS".split("");
+const CHARS_LUCY  = "LUCY".split("");
+const CHARS_SEES = "SEES".split("");
 
 export default function HeroSection() {
   const { dispatch, state } = useAgent();
@@ -72,7 +72,7 @@ export default function HeroSection() {
             style={{ fontSize: "clamp(4rem, 10vw, 8rem)", perspective: "800px" }}
           >
             <span className="block overflow-hidden">
-              {CHARS_AMELI.map((c, i) => (
+              {CHARS_LUCY.map((c, i) => (
                 <span
                   key={i}
                   className="hero-char inline-block"
@@ -83,7 +83,7 @@ export default function HeroSection() {
               ))}
             </span>
             <span className="block overflow-hidden">
-              {CHARS_NIMBUS.map((c, i) => (
+              {CHARS_SEES.map((c, i) => (
                 <span
                   key={i}
                   className="hero-char inline-block text-stroke"
@@ -134,7 +134,7 @@ export default function HeroSection() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZfYOyQ2T3xmjg2bB3JOwUN4QlKY462YZQyhNZKwG_Q1Q7LDVUqn3PCd3xI9QercgV7OouqxFmbssNFaHpWOzz4C_z7KWjtnQ2TMRcfyxFrSMEA6s7_IXD_A1KLTE14LRn8mmquh7ie0OS5w9R9Ibz5krky3Lv4RxxY48sP_WVHuKpVZDPNFGkbBoEGZtx8AG_6ICmwrgJGCaU-QmOuJcjYSt6xCZSCybWmBdEsLCU9gfZFbNJORz0F_w-G77dkb-n3roBOZUICDS2"
-              alt="Ameli Nimbus"
+              alt="Lucy Sees"
               className="w-full aspect-[4/5] object-cover rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-700"
             />
           </div>

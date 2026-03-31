@@ -5,11 +5,11 @@ import CommandCenter from "@/components/agent/CommandCenter";
 import CommandTrigger from "@/components/agent/CommandTrigger";
 
 export const metadata: Metadata = {
-  title: "Ameli Nimbus | UI/UX Designer & Digital Curator",
+  title: "Lucy Sees | UI/UX Designer & Digital Curator",
   description:
     "Senior UI/UX Designer & Photographer crafting high-impact digital experiences. AI-powered portfolio — ask anything.",
   openGraph: {
-    title: "Ameli Nimbus | UI/UX Designer",
+    title: "Lucy Sees | UI/UX Designer",
     description: "AI-orchestrated portfolio. Type ⌘K to navigate.",
     type: "website",
   },

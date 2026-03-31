@@ -30,7 +30,7 @@ export default function AboutSection() {
           <div className="absolute -bottom-6 -left-6 w-full h-full border border-primary-fixed/20 rounded-2xl -z-10" />
           <Image
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAv7BX2hlGQYZV9Kx6mI3FQL6bkgpXKlYxPCDmBufxMDHdjGO0AWTAEbt_A2jplgydDz1Tr4Yowf1gySXk1yhrSYA7nnVtIiaM148b7QupU-C3bmXgKJWWXRL4B4P45r40iSWCTRSXpUCMwO311G8G74H8Yofm07nNRjDiQvbu2IkqrOnL2C2NhQkh3pLjHJSXs4FcVPFFyn9qPFcdnwJum36RaeLaB0tjM5hpi3eCiQAjJdBQYESPvHePS-Eu_sFP_BW1sOegTv2X"
-            alt="Ameli Nimbus Creative"
+            alt="Lucy Sees Creative"
             width={700}
             height={700}
             className="w-full rounded-2xl grayscale hover:grayscale-0 transition-all duration-700"

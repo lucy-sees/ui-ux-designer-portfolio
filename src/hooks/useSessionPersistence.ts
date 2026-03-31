@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useAgent } from "@/context/AgentContext";
 
-const SESSION_KEY = "ameli_agent_session";
+const SESSION_KEY = "lucy_agent_session";
 
 interface PersistedSession {
   recruiterMode: boolean;
