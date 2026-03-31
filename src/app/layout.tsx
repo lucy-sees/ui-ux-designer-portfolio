@@ -7,7 +7,12 @@ import CommandTrigger from "@/components/agent/CommandTrigger";
 export const metadata: Metadata = {
   title: "Ameli Nimbus | UI/UX Designer & Digital Curator",
   description:
-    "A Senior UI/UX Designer & Photographer crafting high-impact digital experiences through a lens of bold editorial minimalism.",
+    "Senior UI/UX Designer & Photographer crafting high-impact digital experiences. AI-powered portfolio — ask anything.",
+  openGraph: {
+    title: "Ameli Nimbus | UI/UX Designer",
+    description: "AI-orchestrated portfolio. Type ⌘K to navigate.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -28,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-void text-surface overflow-x-hidden">
         <AgentProvider>
           {children}
+          {/* Overlays rendered at root level so they sit above everything */}
           <CommandCenter />
           <CommandTrigger />
         </AgentProvider>
