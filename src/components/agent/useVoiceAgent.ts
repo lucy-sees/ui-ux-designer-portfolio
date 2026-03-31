@@ -9,18 +9,44 @@ interface UseVoiceAgentOptions {
   onStateChange?: (state: VoiceState) => void;
 }
 
+// ---------------------------------------------------------------------------
+// Minimal local interface — avoids depending on SpeechRecognition being in
+// lib.dom.d.ts (it isn't available in all TS/Next versions).
+// ---------------------------------------------------------------------------
+interface SR {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onresult:  ((ev: { results: { [i: number]: { [j: number]: { transcript: string } } } }) => void) | null;
+  onerror:   (() => void) | null;
+  onend:     (() => void) | null;
+  start():   void;
+  stop():    void;
+  abort():   void;
+}
+
+interface SRConstructor { new(): SR }
+
+function getSR(): SRConstructor | null {
+  if (typeof window === "undefined") return null;
+  const w = window as any;
+  return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
+}
+
+// ---------------------------------------------------------------------------
+
 const COMMAND_MAP: Record<string, string> = {
-  "next project": "show me the next project",
-  "show awards": "show awards and recognition",
-  "show clients": "show client list",
+  "next project":            "show me the next project",
+  "show awards":             "show awards and recognition",
+  "show clients":            "show client list",
   "activate recruiter mode": "activate recruiter mode",
-  "highlight ux work": "highlight UX design work",
-  "show experience": "show work experience and history",
-  "show projects": "navigate to projects",
-  "go home": "go back to home",
+  "highlight ux work":       "highlight UX design work",
+  "show experience":         "show work experience and history",
+  "show projects":           "navigate to projects",
+  "go home":                 "go back to home",
 };
 
-function normalizeTranscript(raw: string): string {
+function normalize(raw: string): string {
   const lower = raw.toLowerCase().trim();
   for (const [phrase, mapped] of Object.entries(COMMAND_MAP)) {
     if (lower.includes(phrase)) return mapped;
@@ -29,48 +55,45 @@ function normalizeTranscript(raw: string): string {
 }
 
 export function useVoiceAgent({ onResult, onStateChange }: UseVoiceAgentOptions) {
-  const [voiceState, setVoiceState] = useState<VoiceState>("idle");
+  const [voiceState, setVoiceState]   = useState<VoiceState>("idle");
   const [isSupported, setIsSupported] = useState(false);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recRef = useRef<SR | null>(null);
 
-  const setState = useCallback((s: VoiceState) => {
-    setVoiceState(s);
-    onStateChange?.(s);
-  }, [onStateChange]);
+  const setState = useCallback(
+    (s: VoiceState) => { setVoiceState(s); onStateChange?.(s); },
+    [onStateChange]
+  );
 
   useEffect(() => {
-    const SR = (typeof window !== "undefined")
-      ? (window.SpeechRecognition ?? (window as unknown as { webkitSpeechRecognition?: typeof SpeechRecognition }).webkitSpeechRecognition)
-      : null;
+    const SRCtor = getSR();
+    if (!SRCtor) return;
 
-    if (!SR) return;
     setIsSupported(true);
-    const recognition = new SR();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = "en-US";
+    const rec = new SRCtor();
+    rec.continuous     = false;
+    rec.interimResults = false;
+    rec.lang           = "en-US";
 
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const raw = event.results[0][0].transcript;
-      onResult(normalizeTranscript(raw));
+    rec.onresult = (ev) => {
+      const raw = ev.results[0][0].transcript;
+      onResult(normalize(raw));
       setState("processing");
     };
+    rec.onerror = () => setState("error");
+    rec.onend   = () => setState("idle");
 
-    recognition.onerror = () => setState("error");
-    recognition.onend = () => setState("idle");
-
-    recognitionRef.current = recognition;
-    return () => recognitionRef.current?.abort();
+    recRef.current = rec;
+    return () => { recRef.current?.abort(); };
   }, [onResult, setState]);
 
   const startListening = useCallback(() => {
-    if (!recognitionRef.current) return;
-    try { recognitionRef.current.start(); setState("listening"); }
+    if (!recRef.current) return;
+    try { recRef.current.start(); setState("listening"); }
     catch { setState("error"); }
   }, [setState]);
 
   const stopListening = useCallback(() => {
-    recognitionRef.current?.stop();
+    recRef.current?.stop();
     setState("idle");
   }, [setState]);
 
