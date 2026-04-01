@@ -27,6 +27,24 @@ export const SERVICES = [
     description:
       "Providing end-to-end creative direction and consulting for global brands and ambitious startups.",
   },
+  {
+    icon: "palette",
+    title: "Branding & Identity",
+    description:
+      "Developing cohesive brand identities that resonate with audiences and stand out in competitive markets.",
+  },
+  {
+    icon: "phone_android",
+    title: "Mobile App Design",
+    description:
+      "Designing mobile experiences that are both functional and delightful, optimized for touch and mobility.",
+  },
+  {
+    icon: "code",
+    title: "Web Development",
+    description:
+      "Building responsive websites with clean code and modern technologies to bring designs to life.",
+  },
 ];
 
 export const STATS = [
