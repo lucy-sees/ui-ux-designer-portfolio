@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { SERVICES } from "@/lib/data";
+import MagneticButton from "@/components/animations/MagneticButton";
 
 export default function ServicesSection() {
   useEffect(() => {
@@ -12,12 +13,17 @@ export default function ServicesSection() {
 
       gsap.from("#services-header > *", {
         opacity: 0, y: 40, duration: 0.8, stagger: 0.1, ease: "power3.out",
-        scrollTrigger: { trigger: "#services", start: "top 80%" },
+        scrollTrigger: { trigger: "#services", start: "top 90%" },
       });
 
       gsap.from(".service-card", {
         opacity: 0, y: 60, duration: 0.8, stagger: 0.15, ease: "power3.out",
-        scrollTrigger: { trigger: "#services-grid", start: "top 75%" },
+        scrollTrigger: { trigger: "#services-grid", start: "top 85%" },
+      });
+
+      gsap.from(".services-cta > *", {
+        opacity: 0, y: 40, duration: 0.8, stagger: 0.1, ease: "power3.out",
+        scrollTrigger: { trigger: ".services-cta", start: "top 90%" },
       });
     };
     init();
@@ -60,6 +66,21 @@ export default function ServicesSection() {
               </p>
             </div>
           ))}
+        </div>
+
+        <div className="services-cta mt-20 text-center">
+          <p className="font-body text-lg text-surface/40 mb-8 max-w-2xl mx-auto">
+            From concept to launch, I deliver comprehensive design solutions that drive results and exceed expectations.
+          </p>
+          <MagneticButton>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-primary-fixed text-on-primary font-semibold rounded-full hover:bg-primary-fixed/90 transition-colors"
+            >
+              <span>Start a Project</span>
+              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+          </MagneticButton>
         </div>
       </div>
     </section>
